@@ -1,0 +1,45 @@
+From bcf55b0fff4f2dd9a080ea8374e22d47a25aef00 Mon Sep 17 00:00:00 2001
+From: Andreas Metzler <ametzler@bebt.de>
+Date: Sat, 2 Sep 2017 15:10:09 +0200
+Subject: [PATCH] tests: test more printf format specifiers
+
+* find/testsuite/find.gnu/printf.exp: Add coverage for %T* (limited to
+strftime sequences mandated by POSIX), %M, %t, %y, and %Y. Run this test
+with TZ=UTC. (Latter fix by Bernhard Voelker.)
+* find/testsuite/find.gnu/printf.xo: Likewise.
+---
+ find/testsuite/find.gnu/printf.exp | 4 +++-
+ find/testsuite/find.gnu/printf.xo  | 4 ++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/find/testsuite/find.gnu/printf.exp b/find/testsuite/find.gnu/printf.exp
+index ba8e75b7..a1e83de3 100644
+--- a/find/testsuite/find.gnu/printf.exp
++++ b/find/testsuite/find.gnu/printf.exp
+@@ -2,5 +2,7 @@ exec rm -rf tmp
+ exec mkdir tmp
+ exec touch tmp/file
+ exec chmod 600 tmp/file
+-find_start p {tmp -type f -printf "a %d\n" -printf "b %f\n" -printf "c %h\n" -printf "d %H\n" -printf "e %l\n" -printf "f %m\n" -printf "g %n\n" -printf "h %p\n" -printf "i %P\n" -printf "j %y\n" -printf "k %Y\n" -printf "percent it%%works%%\n" -printf "string-right !%10p!\n" -printf "string-left !%-10p!\n" -printf "trunc-R !%10.6p!\n" -printf "trunc-L !%-10.6p!\n" -printf "a5 !%5d!\n" -printf "a05 !%05d!\n" -printf "a+ %+d\n" }
++exec touch -d 1990-06-22T12:00Z tmp/file
++set env(TZ) "UTC"
++find_start p {tmp -type f -printf "a %d\n" -printf "b %f\n" -printf "c %h\n" -printf "d %H\n" -printf "e %l\n" -printf "f %m\n" -printf "g %n\n" -printf "h %p\n" -printf "i %P\n" -printf "j %y\n" -printf "k %Y\n" -printf "percent it%%works%%\n" -printf "string-right !%10p!\n" -printf "string-left !%-10p!\n" -printf "trunc-R !%10.6p!\n" -printf "trunc-L !%-10.6p!\n" -printf "a5 !%5d!\n" -printf "a05 !%05d!\n" -printf "a+ %+d\n" -printf "l1 %T+ %T@ TH=%TH TI=%TI TM=%TM TT=%TT Td=%Td TD=%TD Tj=%Tj Tm=%Tm TU=%TU Tw=%Tw TW=%TW Ty=%Ty TY=%TY\n"  -printf "l2 M=%M\n" -printf "l3 t=%t\n" -printf "l4 y=%y Y=%Y\n" }
+ exec rm -rf tmp
+diff --git a/find/testsuite/find.gnu/printf.xo b/find/testsuite/find.gnu/printf.xo
+index e6072939..ac62e417 100644
+--- a/find/testsuite/find.gnu/printf.xo
++++ b/find/testsuite/find.gnu/printf.xo
+@@ -12,6 +12,10 @@ h tmp/file
+ i file
+ j f
+ k f
++l1 1990-06-22+12:00:00.0000000000 646056000.0000000000 TH=12 TI=12 TM=00 TT=12:00:00.0000000000 Td=22 TD=06/22/90 Tj=173 Tm=06 TU=24 Tw=5 TW=25 Ty=90 TY=1990
++l2 M=-rw-------
++l3 t=Fri Jun 22 12:00:00.0000000000 1990
++l4 y=f Y=f
+ percent it%works%
+ string-left !tmp/file  !
+ string-right !  tmp/file!
+-- 
+2.14.2
+

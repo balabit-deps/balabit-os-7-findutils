@@ -1,0 +1,2 @@
+10_fix_bsd_hurd_testsuite.diff
+20_tests-Test-more-printf-format-specifiers.patch

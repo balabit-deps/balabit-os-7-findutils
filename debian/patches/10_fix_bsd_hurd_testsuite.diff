@@ -1,0 +1,36 @@
+From 7c4eaec893928f0f1a73561f12cee749a72c059b Mon Sep 17 00:00:00 2001
+From: Andreas Metzler <ametzler@bebt.de>
+Date: Sun, 5 Jun 2016 11:41:38 +0200
+Subject: [PATCH] Fix testsuite error on hurd and BSD related to ln
+
+* find/testsuite/find.gnu/samefile-p-brokenlink.exp: Pass "-P" option to
+enforce generation of hard link to symlink. link() behavior is
+"implementation-defined" by POSIX and BSD/hurd chose a different behavior
+than Linux.
+http://bugs.debian.org/826357
+
+* find/testsuite/find.gnu/samefile-p-brokenlink.exp: Cleanup: Fix ln -s
+invocation to generate a valid symlink.
+---
+ find/testsuite/find.gnu/samefile-p-brokenlink.exp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/find/testsuite/find.gnu/samefile-p-brokenlink.exp b/find/testsuite/find.gnu/samefile-p-brokenlink.exp
+index 8ae1fad..65b2dd4 100644
+--- a/find/testsuite/find.gnu/samefile-p-brokenlink.exp
++++ b/find/testsuite/find.gnu/samefile-p-brokenlink.exp
+@@ -3,9 +3,9 @@ exec rm -rf tmp
+ exec mkdir tmp
+ exec touch tmp/file1
+ exec ln    tmp/file1 tmp/link
+-exec ln -s tmp/file1 tmp/symlink
++exec ln -s file1 tmp/symlink
+ exec ln -s tmp/file2 tmp/broken
+-exec ln    tmp/broken tmp/blink
++exec ln -P tmp/broken tmp/blink
+ 
+ find_start p { -P tmp -samefile tmp/broken -print}
+ exec rm -rf tmp
+-- 
+2.8.1
+
