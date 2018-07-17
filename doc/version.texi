@@ -1,0 +1,4 @@
+@set UPDATED 8 July 2017
+@set UPDATED-MONTH July 2017
+@set EDITION 4.7.0-git
+@set VERSION 4.7.0-git
