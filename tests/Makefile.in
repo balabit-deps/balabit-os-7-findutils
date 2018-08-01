@@ -210,7 +210,7 @@ TESTS = test-accept$(EXEEXT) test-alloca-opt$(EXEEXT) \
 	test-wctype-h$(EXEEXT) test-wcwidth$(EXEEXT) \
 	test-xalloc-die.sh test-xstrtol.sh test-xstrtoumax.sh \
 	test-yesno.sh
-XFAIL_TESTS =
+XFAIL_TESTS = test-rwlock1
 noinst_PROGRAMS =
 check_PROGRAMS = test-accept$(EXEEXT) test-alloca-opt$(EXEEXT) \
 	test-areadlink$(EXEEXT) test-areadlink-with-size$(EXEEXT) \
