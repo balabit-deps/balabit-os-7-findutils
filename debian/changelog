@@ -1,3 +1,9 @@
+findutils (4.6.0+git+20170828-2bb1) bionic; urgency=medium
+
+  * Balabit patched version
+
+ -- Balabit Platform Team <devnull@dev.null>  Thu, 02 Aug 2018 11:34:41 +0200
+
 findutils (4.6.0+git+20170828-2) unstable; urgency=low
 
   * Update 20_tests-Test-more-printf-format-specifiers.patch from upstream GIT
